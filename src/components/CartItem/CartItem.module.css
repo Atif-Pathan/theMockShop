@@ -1,0 +1,86 @@
+.cartItem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Remove the last item's border */
+.cartItem:last-child {
+  border-bottom: none;
+}
+
+.itemImage {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.itemDetails {
+  flex-grow: 1;
+}
+
+.itemDetails a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.itemDetails a:hover h3 {
+  color: var(--primary-color);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.quantityInput {
+  width: 50px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.5rem;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.updateButton {
+  background-color: #22c55e; /* Green for update */
+  padding: 0.6rem;
+  /* THE JANK FIX: Reserve space, but be invisible */
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease-in-out,
+    transform 0.2s ease-in-out;
+}
+
+.updateButton.visible {
+  /* Make it visible and clickable when needed */
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.removeButton {
+  background: none;
+  color: var(--subtle-text-color);
+  font-size: 1.1rem;
+  padding: 0.5rem;
+}
+
+.removeButton:hover {
+  color: #ef4444; /* Red on hover */
+}
+
+.subtotal {
+  font-weight: 500;
+  margin-left: auto;
+  min-width: 100px; /* Helps with alignment */
+  text-align: right;
+}
