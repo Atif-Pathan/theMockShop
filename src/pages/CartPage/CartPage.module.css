@@ -1,0 +1,30 @@
+.page {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.emptyCart {
+  text-align: center;
+  padding: 3rem;
+}
+
+.cartList {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden; /* Clips the border-bottom of the last item */
+}
+
+.summary {
+  padding: 2rem;
+  text-align: right;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.checkoutSection {
+  margin-top: 2rem;
+  padding: 2rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
