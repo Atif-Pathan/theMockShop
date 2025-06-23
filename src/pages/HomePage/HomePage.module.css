@@ -1,0 +1,56 @@
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: calc(100vh - 80px); /* Full viewport height minus header height */
+  padding: 2rem;
+}
+
+.headline {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.5rem, 6vw, 4.5rem); /* Responsive font size */
+  margin: 0;
+  max-width: 14ch; /* Limits line length for readability */
+  line-height: 1.1;
+  animation: fadeInDown 0.8s ease-out both;
+}
+
+.subheadline {
+  font-size: clamp(1.1rem, 2.5vw, 1.25rem);
+  color: var(--subtle-text-color);
+  max-width: 45ch;
+  margin: 1.5rem 0 2.5rem 0;
+  animation: fadeInUp 0.8s 0.2s ease-out both;
+}
+
+.ctaButton {
+  font-size: 1.1rem;
+  padding: 1rem 2.5rem;
+  animation: fadeInUp 0.8s 0.4s ease-out both;
+}
+
+/* Keyframe animations for subtle entrance */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

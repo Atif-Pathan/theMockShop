@@ -2,10 +2,11 @@ import './App.css';
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from './components/Header/Header.jsx';
+import styles from './App.module.css';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState('light');
 
   const handleAddToCart = (product, quantity) => {
     // If quantity is 0 or less, treat it as a removal.
@@ -54,21 +55,23 @@ function App() {
   document.documentElement.className = theme;
 
   return (
-    <>
+    <div className={styles.app}>
       <Header
         numberOfItems={cartItems.length}
         theme={theme}
         toggleTheme={toggleTheme}
       />
-      <Outlet
-        context={{
-          cartItems,
-          handleAddToCart,
-          handleUpdateQuantity,
-          handleRemoveItem,
-        }}
-      />
-    </>
+      <main className={styles.mainContent}>
+        <Outlet
+          context={{
+            cartItems,
+            handleAddToCart,
+            handleUpdateQuantity,
+            handleRemoveItem,
+          }}
+        />
+      </main>
+    </div>
   );
 }
 

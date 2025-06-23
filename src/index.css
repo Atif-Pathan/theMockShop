@@ -1,22 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@600;700&display=swap');
 
-/* Defines your color theme variables */
 :root.light {
   --background-color: #f4f4f5;
   --text-color: #18181b;
   --card-bg-color: #ffffff;
-  --primary-color: #3b82f6;
-  --border-color: #e4e4e7;
-  --subtle-text-color: #71717a;
+  --primary-color: #2563eb;
+  --border-color: #e5e5e5;
+  --subtle-text-color: #555555;
 }
 
 :root.dark {
-  --background-color: #18181b;
-  --text-color: #f4f4f5;
-  --card-bg-color: #27272a;
-  --primary-color: #60a5fa;
-  --border-color: #3f3f46;
-  --subtle-text-color: #a1a1aa;
+  --background-color: #1c1c1c;
+  --text-color: #f1f1f1;
+  --card-bg-color: #2a2a2a;
+  --primary-color: #3b82f6;
+  --border-color: #3a3a3a;
+  --subtle-text-color: #aaaaaa;
 }
 
 body {
@@ -29,25 +28,49 @@ body {
     color 0.2s ease-in-out;
 }
 
-/* Global Button Styles */
+/* Add the subtle gradient for the dark theme */
+:root.dark {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 0
+  );
+  background-size: 25px 25px;
+}
+
+/* Global Button Styles remain the same */
 button {
   border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
   font-weight: 500;
+  font-size: 1rem;
   background-color: var(--primary-color);
   color: white;
   transition:
     transform 0.1s ease-in-out,
-    background-color 0.2s;
+    box-shadow 0.2s;
 }
 
 button:hover {
-  transform: scale(1.05);
+  box-shadow: 0 4px 15px -3px
+    color-mix(in srgb, var(--primary-color) 40%, transparent);
 }
 
 button:active {
   transform: scale(0.98);
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
