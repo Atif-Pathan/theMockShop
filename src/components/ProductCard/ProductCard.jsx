@@ -9,48 +9,82 @@ export default function ProductCard({
   initialQuantity,
   isInCart,
 }) {
-  // local state is initialized intelligently
   const [quantity, setQuantity] = useState(initialQuantity);
 
-  // This effect ensures that if the cart updates from elsewhere,
-  // the card's quantity reflects it.
+  // This effect ensures the card's quantity updates if the cart changes elsewhere
   useEffect(() => {
     setQuantity(initialQuantity);
   }, [initialQuantity]);
 
   const handleQuantityChange = (event) => {
-    setQuantity(Number(event.target.value));
+    const value = Number(event.target.value);
+    // Allow empty input for typing, but treat non-numbers as 0
+    setQuantity(isNaN(value) ? 0 : value);
+  };
+
+  const increment = () => {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+  };
+
+  const decrement = () => {
+    setQuantity((prevQuantity) => Math.max(0, prevQuantity - 1));
   };
 
   const buttonText = isInCart ? 'Update Cart' : 'Add to Cart';
 
   return (
-    <div className={styles.card}>
-      <Link to={`/shop/${product.slug}`} className={styles.link}>
+    <article className={styles.card}>
+      <Link to={`/shop/${product.slug}`} className={styles.imageWrapper}>
         <img
           className={styles.image}
           src={product.images[0]}
           alt={product.title}
         />
+      </Link>
+
+      <div className={styles.details}>
         <h2 className={styles.title}>{product.title}</h2>
         <p className={styles.price}>${product.price}</p>
-      </Link>
-      <div className={styles.actions}>
-        <label htmlFor={`quantity-${product.id}`}>Qty:</label>
-        <input
-          type="number"
-          name="item-quantity"
-          id={`quantity-${product.id}`}
-          min={0}
-          value={quantity}
-          onChange={handleQuantityChange}
-          className={styles.quantityInput}
-        />
-        <button onClick={() => handleAddToCart(product, quantity)}>
+      </div>
+
+      <footer className={styles.actionsFooter}>
+        <div className={styles.quantityWrapper}>
+          <button
+            type="button"
+            onClick={decrement}
+            className={styles.quantityButton}
+            aria-label="Decrease quantity"
+          >
+            &ndash;
+          </button>
+          <label htmlFor={`quantity-${product.id}`} className="sr-only">
+            Quantity for {product.title}
+          </label>
+          <input
+            id={`quantity-${product.id}`}
+            type="number"
+            min="0"
+            value={quantity}
+            onChange={handleQuantityChange}
+            className={styles.quantityInput}
+          />
+          <button
+            type="button"
+            onClick={increment}
+            className={styles.quantityButton}
+            aria-label="Increase quantity"
+          >
+            +
+          </button>
+        </div>
+        <button
+          onClick={() => handleAddToCart(product, quantity)}
+          className={styles.addToCartButton}
+        >
           {buttonText}
         </button>
-      </div>
-    </div>
+      </footer>
+    </article>
   );
 }
 
