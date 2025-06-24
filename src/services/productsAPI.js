@@ -8,8 +8,8 @@ const getAllProducts = async () => {
       throw new Error(`Response status: ${response.status}`);
     }
     const data = await response.json();
-    const filteredData = data.filter((item) => item.id < 52); // the first 51 objects are good, the rest are other people adding in random objects
-    return filteredData;
+    // const filteredData = data.filter((item) => item.id > 60); // the first 51 objects are good, the rest are other people adding in random objects
+    return data;
   } catch (error) {
     console.error('API call failed:', error);
     throw error;

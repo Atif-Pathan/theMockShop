@@ -4,39 +4,189 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  min-height: calc(100vh - 80px); /* Full viewport height minus header height */
+  min-height: calc(100vh - 80px);
   padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroContent {
+  max-width: 800px;
+  z-index: 2;
+  position: relative;
 }
 
 .headline {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 700;
-  font-size: clamp(2.5rem, 6vw, 4.5rem); /* Responsive font size */
-  margin: 0;
-  max-width: 14ch; /* Limits line length for readability */
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  margin: 0 0 1.5rem 0;
   line-height: 1.1;
-  animation: fadeInDown 0.8s ease-out both;
+  animation:
+    fadeInDown 0.8s ease-out both,
+    gentleBounce 3s ease-in-out infinite;
+  background: linear-gradient(
+    135deg,
+    var(--text-color),
+    var(--subtle-text-color)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.02em;
+  text-shadow: 3px 3px 0px
+    color-mix(in srgb, var(--primary-color) 30%, transparent);
+  /* 6px 6px 0px color-mix(in srgb, var(--primary-color) 20%, transparent); */
+  /* 9px 9px 0px color-mix(in srgb, var(--primary-color) 15%, transparent); */
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.headlineAccent {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-hover)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+  will-change: auto;
+  text-shadow: 3px 3px 0px
+    color-mix(in srgb, var(--primary-color) 40%, transparent);
+  /* 6px 6px 0px color-mix(in srgb, var(--primary-color) 30%, transparent); */
+  /* 9px 9px 0px color-mix(in srgb, var(--primary-color) 25%, transparent); */
+  animation: gentleBounce 5s ease-in-out infinite reverse;
 }
 
 .subheadline {
   font-size: clamp(1.1rem, 2.5vw, 1.25rem);
   color: var(--subtle-text-color);
-  max-width: 45ch;
-  margin: 1.5rem 0 2.5rem 0;
+  max-width: 55ch;
+  margin: 0 auto 3rem auto;
+  line-height: 1.6;
   animation: fadeInUp 0.8s 0.2s ease-out both;
 }
 
-.ctaButton {
-  font-size: 1.1rem;
-  padding: 1rem 2.5rem;
-  animation: fadeInUp 0.8s 0.4s ease-out both;
+.brandHighlight {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-hover)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--primary-color);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }
 
-/* Keyframe animations for subtle entrance */
+.ctaSection {
+  animation: fadeInUp 0.8s 0.3s ease-out both;
+}
+
+.ctaButtonWrapper {
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.ctaButton {
+  font-family: 'Bungee', cursive;
+  font-size: 1.1rem;
+  font-weight: 400;
+  padding: 1rem 2rem;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-hover)
+  );
+  border: none;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px
+    color-mix(in srgb, var(--primary-color) 20%, transparent);
+  letter-spacing: -0.01em;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px
+    color-mix(in srgb, var(--primary-color) 30%, transparent);
+  background: linear-gradient(
+    135deg,
+    var(--primary-hover),
+    var(--primary-color)
+  );
+}
+
+.ctaButton:active {
+  transform: translateY(0) scale(1);
+}
+
+.ctaButton:focus {
+  outline: 2px solid color-mix(in srgb, var(--primary-color) 50%, transparent);
+  outline-offset: 2px;
+}
+
+.ctaButton i {
+  transition: transform 0.2s ease;
+}
+
+.ctaButton:hover i {
+  transform: translateX(2px);
+}
+
+.ctaSubtext {
+  color: var(--subtle-text-color);
+  font-size: 0.95rem;
+  font-style: italic;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.mouseGlow {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--primary-color) 8%, transparent) 0%,
+    color-mix(in srgb, var(--primary-color) 4%, transparent) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+:root.light .mouseGlow {
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--primary-color) 12%, transparent) 0%,
+    color-mix(in srgb, var(--primary-color) 6%, transparent) 40%,
+    transparent 70%
+  );
+}
+
+/* Keyframe animations */
 @keyframes fadeInDown {
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(-30px);
   }
   to {
     opacity: 1;
@@ -47,10 +197,74 @@
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes gentleBounce {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .hero {
+    padding: 1.5rem;
+    min-height: calc(100vh - 70px);
+  }
+
+  .headline {
+    margin-bottom: 1rem;
+    text-shadow:
+      2px 2px 0px color-mix(in srgb, var(--primary-color) 30%, transparent),
+      4px 4px 0px color-mix(in srgb, var(--primary-color) 20%, transparent);
+  }
+
+  .headlineAccent {
+    text-shadow:
+      2px 2px 0px color-mix(in srgb, var(--primary-color) 40%, transparent),
+      4px 4px 0px color-mix(in srgb, var(--primary-color) 30%, transparent);
+  }
+
+  .subheadline {
+    margin-bottom: 2rem;
+  }
+
+  .ctaButton {
+    padding: 0.875rem 1.75rem;
+    font-size: 1rem;
+  }
+
+  .mouseGlow {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ctaButton {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .headline,
+  .headlineAccent {
+    animation: none;
+  }
+
+  .mouseGlow {
+    display: none;
   }
 }
