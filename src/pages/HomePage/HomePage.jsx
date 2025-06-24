@@ -40,9 +40,8 @@ export default function HomePage() {
         </h1>
 
         <p className={styles.subheadline}>
-          Welcome to{' '}
-          <span className={styles.brandHighlight}>The Curated Wardrobe</span>, a
-          destination for those who seek more than just clothes. We offer a
+          Welcome to <span className={styles.brandHighlight}>The Wardrobe</span>
+          , a destination for those who seek more than just clothes. We offer a
           thoughtfully selected range of high-quality, timeless essentials
           designed to build a versatile and intentional wardrobe.
         </p>

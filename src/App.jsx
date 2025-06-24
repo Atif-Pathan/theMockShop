@@ -6,10 +6,8 @@ import styles from './App.module.css';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
-  const [theme, setTheme] = useState('light');
 
   const handleAddToCart = (product, quantity) => {
-    // If quantity is 0 or less, treat it as a removal.
     if (quantity <= 0) {
       handleRemoveItem(product.id);
       return;
@@ -19,10 +17,7 @@ function App() {
 
     if (existingItem) {
       const updatedCartItems = cartItems.map((item) =>
-        item.id === product.id
-          ? // Set quantity, don't add to it.
-            { ...item, quantity: quantity }
-          : item,
+        item.id === product.id ? { ...item, quantity: quantity } : item,
       );
       setCartItems(updatedCartItems);
     } else {
@@ -33,7 +28,6 @@ function App() {
 
   const handleUpdateQuantity = (productId, newQuantity) => {
     if (newQuantity <= 0) {
-      // if quanitity is 0 then we should delete the item instead
       handleRemoveItem(productId);
       return;
     }
@@ -48,19 +42,9 @@ function App() {
     setCartItems(updatedCartItems);
   };
 
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
-  };
-
-  document.documentElement.className = theme;
-
   return (
     <div className={styles.app}>
-      <Header
-        numberOfItems={cartItems.length}
-        theme={theme}
-        toggleTheme={toggleTheme}
-      />
+      <Header numberOfItems={cartItems.length} />
       <main className={styles.mainContent}>
         <Outlet
           context={{

@@ -1,0 +1,214 @@
+.errorPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 80px);
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.errorContent {
+  max-width: 600px;
+  z-index: 2;
+  position: relative;
+  animation: fadeInUp 0.8s ease-out both;
+}
+
+.errorIcon {
+  font-size: 4rem;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.errorTitle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  background: linear-gradient(
+    135deg,
+    var(--text-color),
+    var(--subtle-text-color)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.errorMessage {
+  font-size: 1.2rem;
+  color: var(--subtle-text-color);
+  margin: 0 0 2rem 0;
+  line-height: 1.6;
+}
+
+.homeLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-hover)
+  );
+  color: white;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px
+    color-mix(in srgb, var(--primary-color) 25%, transparent);
+}
+
+.homeLink:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px
+    color-mix(in srgb, var(--primary-color) 35%, transparent);
+  background: linear-gradient(
+    135deg,
+    var(--primary-hover),
+    var(--primary-color)
+  );
+}
+
+.homeLink:focus {
+  outline: 2px solid color-mix(in srgb, var(--primary-color) 50%, transparent);
+  outline-offset: 2px;
+}
+
+.homeLink:active {
+  transform: translateY(0);
+}
+
+.homeIcon {
+  transition: transform 0.2s ease;
+}
+
+.homeLink:hover .homeIcon {
+  transform: translateX(-2px);
+}
+
+/* Background decoration */
+.errorPage::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  right: 10%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--primary-color) 6%, transparent) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  z-index: 1;
+  animation: float 10s ease-in-out infinite;
+}
+
+.errorPage::after {
+  content: '';
+  position: absolute;
+  bottom: 20%;
+  left: 10%;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--primary-color) 4%, transparent) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  z-index: 1;
+  animation: float 12s ease-in-out infinite reverse;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .errorPage {
+    padding: 1.5rem;
+  }
+
+  .errorIcon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .errorMessage {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .homeLink {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .errorPage {
+    padding: 1rem;
+  }
+
+  .homeLink {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .errorIcon,
+  .homeLink,
+  .errorPage::before,
+  .errorPage::after {
+    animation: none;
+  }
+}

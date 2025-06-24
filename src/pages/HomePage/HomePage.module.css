@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 150px);
   padding: 2rem;
   position: relative;
   overflow: hidden;
@@ -49,6 +49,7 @@
     var(--primary-color),
     var(--primary-hover)
   );
+  line-height: 1.25;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -64,7 +65,7 @@
 .subheadline {
   font-size: clamp(1.1rem, 2.5vw, 1.25rem);
   color: var(--subtle-text-color);
-  max-width: 55ch;
+  max-width: 60ch;
   margin: 0 auto 3rem auto;
   line-height: 1.6;
   animation: fadeInUp 0.8s 0.2s ease-out both;

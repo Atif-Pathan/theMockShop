@@ -1,11 +1,11 @@
-'use client';
-
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styles from './Header.module.css';
+import { useTheme } from '../../contexts/ThemeContext';
 
-export default function Header({ numberOfItems, theme, toggleTheme }) {
+export default function Header({ numberOfItems }) {
+  const { theme, toggleTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const closeMenu = () => setIsMenuOpen(false);
@@ -176,6 +176,4 @@ export default function Header({ numberOfItems, theme, toggleTheme }) {
 
 Header.propTypes = {
   numberOfItems: PropTypes.number.isRequired,
-  theme: PropTypes.string.isRequired,
-  toggleTheme: PropTypes.func.isRequired,
 };
