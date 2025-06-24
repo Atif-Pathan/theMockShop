@@ -1,7 +1,5 @@
-// The JSX for this component remains the same, but it will now be
-// styled correctly by its updated CSS module.
-import PropTypes from 'prop-types';
 import styles from './FilterBar.module.css';
+import PropTypes from 'prop-types';
 
 export default function FilterBar({
   searchTerm,
@@ -11,32 +9,37 @@ export default function FilterBar({
   onCategoryChange,
 }) {
   return (
-    <section className={styles.filterBar} aria-label="Product Filters">
+    <div className={styles.filterBar}>
       <div className={styles.searchWrapper}>
-        <i className={`fa-solid fa-magnifying-glass ${styles.searchIcon}`}></i>
+        <i
+          className={`fa-solid fa-search ${styles.searchIcon}`}
+          aria-hidden="true"
+        ></i>
+        <label htmlFor="search" className="sr-only">
+          Search products
+        </label>
         <input
           type="search"
-          placeholder="Search by name..."
+          id="search"
+          className={styles.searchInput}
+          placeholder="Search for products..."
           value={searchTerm}
           onChange={onSearchChange}
-          className={styles.searchInput}
-          aria-label="Search products by name"
         />
       </div>
+
       <div className={styles.categoryFilters}>
         {categories.map((category) => (
           <button
             key={category}
+            className={`${styles.categoryButton} ${selectedCategory === category ? styles.active : ''}`}
             onClick={() => onCategoryChange(category)}
-            className={`${styles.categoryButton} ${
-              selectedCategory === category ? styles.active : ''
-            }`}
           >
             {category}
           </button>
         ))}
       </div>
-    </section>
+    </div>
   );
 }
 

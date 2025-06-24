@@ -30,7 +30,7 @@ export default function ProductCard({
     setQuantity((prevQuantity) => Math.max(0, prevQuantity - 1));
   };
 
-  const buttonText = isInCart ? 'Update Cart' : 'Add to Cart';
+  const buttonText = isInCart ? 'Update' : 'Add';
 
   return (
     <article className={styles.card}>
@@ -81,6 +81,10 @@ export default function ProductCard({
           onClick={() => handleAddToCart(product, quantity)}
           className={styles.addToCartButton}
         >
+          <i
+            className={`fa-solid fa-cart-shopping ${styles.cartIcon}`}
+            aria-hidden="true"
+          ></i>
           {buttonText}
         </button>
       </footer>
