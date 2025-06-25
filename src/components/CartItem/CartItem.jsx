@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styles from './CartItem.module.css';
@@ -8,63 +7,81 @@ export default function CartItem({
   handleUpdateQuantity,
   handleRemoveItem,
 }) {
-  // This component now has its own "draft" state for the quantity
-  const [draftQuantity, setDraftQuantity] = useState(item.quantity);
-
-  // This effect ensures that if the cart is updated from elsewhere,
-  // this component's draft state resets to the new official quantity.
-  useEffect(() => {
-    setDraftQuantity(item.quantity);
-  }, [item.quantity]);
-
   const handleInputChange = (e) => {
-    setDraftQuantity(Number(e.target.value));
+    const newQuantity = Number(e.target.value);
+    if (newQuantity >= 1) {
+      handleUpdateQuantity(item.id, newQuantity);
+    }
   };
 
-  const handleUpdateClick = () => {
-    handleUpdateQuantity(item.id, draftQuantity);
+  const increment = () => {
+    handleUpdateQuantity(item.id, item.quantity + 1);
   };
 
-  // The "Update" button only shows if the draft quantity is different
-  // from the official quantity in the cart.
-  const showUpdateButton = draftQuantity !== item.quantity;
+  const decrement = () => {
+    if (item.quantity > 1) {
+      handleUpdateQuantity(item.id, item.quantity - 1);
+    }
+  };
 
   return (
-    <div className={styles.cartItem}>
-      <img src={item.images[0]} alt={item.title} className={styles.itemImage} />
+    <article className={styles.cartItem}>
+      <Link to={`/shop/${item.slug}`} className={styles.itemImageLink}>
+        <img
+          src={item.images[0]}
+          alt={item.title}
+          className={styles.itemImage}
+        />
+      </Link>
+
       <div className={styles.itemDetails}>
         <Link to={`/shop/${item.slug}`}>
-          <h3>{item.title}</h3>
+          <h3 className={styles.itemTitle}>{item.title}</h3>
         </Link>
-        <p>${item.price} each</p>
+        <p className={styles.itemPrice}>
+          ${item.price} each (Subtotal: ${item.price * item.quantity})
+        </p>
       </div>
+
       <div className={styles.actions}>
-        <label htmlFor={`quantity-${item.id}`}>Qty:</label>
-        <input
-          id={`quantity-${item.id}`}
-          type="number"
-          value={draftQuantity}
-          onChange={handleInputChange}
-          min="0"
-          className={styles.quantityInput}
-        />
-        <button
-          onClick={handleUpdateClick}
-          className={`${styles.updateButton} ${
-            showUpdateButton ? styles.visible : ''
-          }`}
-        >
-          <i className="fa-solid fa-check"></i>
-        </button>
+        <div className={styles.quantityWrapper}>
+          <button
+            type="button"
+            onClick={decrement}
+            className={styles.quantityButton}
+            aria-label="Decrease quantity"
+          >
+            &ndash;
+          </button>
+          <label htmlFor={`quantity-${item.id}`} className="sr-only">
+            Quantity for {item.title}
+          </label>
+          <input
+            id={`quantity-${item.id}`}
+            type="number"
+            value={item.quantity}
+            onChange={handleInputChange}
+            min="1"
+            className={styles.quantityInput}
+          />
+          <button
+            type="button"
+            onClick={increment}
+            className={styles.quantityButton}
+            aria-label="Increase quantity"
+          >
+            +
+          </button>
+        </div>
         <button
           onClick={() => handleRemoveItem(item.id)}
           className={styles.removeButton}
+          aria-label={`Remove ${item.title} from cart`}
         >
           <i className="fa-solid fa-trash"></i>
         </button>
       </div>
-      <p className={styles.subtotal}>Subtotal: ${item.price * item.quantity}</p>
-    </div>
+    </article>
   );
 }
 

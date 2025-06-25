@@ -1,30 +1,124 @@
 .page {
-  max-width: 1000px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  animation: fadeInDown 0.8s ease-out both;
+}
+
+.title {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin: 0 0 0.5rem 0;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--subtle-text-color);
+  max-width: 50ch;
+  margin: 0 auto;
 }
 
 .emptyCart {
   text-align: center;
-  padding: 3rem;
+  padding: 4rem;
+  border: 1px dashed var(--border-color);
+  border-radius: 12px;
+}
+
+.emptyCart p {
+  font-size: 1.2rem;
+  color: var(--subtle-text-color);
+  margin-bottom: 1.5rem;
+}
+
+.cartLayout {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* 2/3 for items, 1/3 for summary */
+  gap: 2rem;
+  align-items: start;
+  width: 100%;
 }
 
 .cartList {
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  overflow: hidden; /* Clips the border-bottom of the last item */
+  border-radius: 12px;
+  background-color: var(--card-bg-color);
 }
 
-.summary {
-  padding: 2rem;
-  text-align: right;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.checkoutSection {
-  margin-top: 2rem;
-  padding: 2rem;
+.summaryCard {
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: 12px;
+  padding: 1.5rem;
+  background-color: var(--card-bg-color);
+  position: sticky; /* Makes summary stick on scroll */
+  top: 100px; /* Offset for the main header */
+}
+
+.summaryTitle {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  margin: 0 0 1.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.summaryTotal {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.checkoutButton {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .cartLayout {
+    grid-template-columns: 1fr; /* Stack to a single column */
+  }
+}
+
+@media (max-width: 640px) {
+  .cartLayout {
+    max-width: 450px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 1.5rem;
+  }
+  .cartLayout {
+    gap: 1.5rem;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
