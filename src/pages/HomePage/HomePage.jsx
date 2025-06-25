@@ -35,15 +35,15 @@ export default function HomePage() {
 
       <div className={styles.heroContent}>
         <h1 className={styles.headline}>
-          Conscious Style,
-          <span className={styles.headlineAccent}> Effortlessly Delivered</span>
+          Your Essential Style, <br />
+          <span className={styles.headlineAccent}>Carefully Chosen.</span>
         </h1>
 
         <p className={styles.subheadline}>
-          Welcome to <span className={styles.brandHighlight}>The Wardrobe</span>
-          , a destination for those who seek more than just clothes. We offer a
-          thoughtfully selected range of high-quality, timeless essentials
-          designed to build a versatile and intentional wardrobe.
+          Welcome to <span className={styles.brandHighlight}>The Edit</span> –
+          where quality, consciousness, and timeless design converge. We present
+          a handpicked collection of essentials for your wardrobe and home,
+          curated for a more intentional lifestyle.
         </p>
 
         <div className={styles.ctaSection}>
@@ -53,10 +53,7 @@ export default function HomePage() {
               <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
             </button>
           </Link>
-
-          <p className={styles.ctaSubtext}>
-            Shop with purpose, wear with confidence
-          </p>
+          <p className={styles.ctaSubtext}>Discover pieces that matter.</p>
         </div>
       </div>
     </main>

@@ -1,10 +1,14 @@
 import { Link, useOutletContext } from 'react-router-dom';
 import CartItem from '../../components/CartItem/CartItem.jsx';
 import styles from './CartPage.module.css';
+import confetti from 'canvas-confetti';
+import { useRef } from 'react';
 
 export default function CartPage() {
   const { cartItems, handleUpdateQuantity, handleRemoveItem } =
     useOutletContext();
+
+  const checkoutButtonRef = useRef(null);
 
   const subtotal = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -14,6 +18,22 @@ export default function CartPage() {
   const shipping = subtotal > 0 ? 5.0 : 0;
   const tax = subtotal * 0.08;
   const totalPrice = subtotal + shipping + tax;
+
+  const handleCheckout = () => {
+    // Get the position of the button on the screen
+    const rect = checkoutButtonRef.current.getBoundingClientRect();
+    const origin = {
+      x: (rect.left + rect.width / 2) / window.innerWidth,
+      y: (rect.top + rect.height / 2) / window.innerHeight,
+    };
+
+    // Fire the confetti!
+    confetti({
+      particleCount: 150,
+      spread: 100,
+      origin: origin,
+    });
+  };
 
   return (
     <main className={styles.page}>
@@ -62,7 +82,11 @@ export default function CartPage() {
               <span>Total</span>
               <span>${totalPrice.toFixed(2)}</span>
             </div>
-            <button className={styles.checkoutButton} disabled>
+            <button
+              className={styles.checkoutButton}
+              ref={checkoutButtonRef}
+              onClick={handleCheckout}
+            >
               Proceed to Checkout
             </button>
           </aside>

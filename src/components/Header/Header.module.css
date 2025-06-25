@@ -38,6 +38,8 @@
 }
 
 .logoText {
+  font-size: 1.7rem;
+  font-family: 'Poppins', sans-serif;
   background: linear-gradient(
     135deg,
     var(--warning-color),
@@ -251,7 +253,7 @@
 
 @media (max-width: 320px) {
   .logoText {
-    font-size: 1.15rem;
+    font-size: 1.5rem;
   }
 }
 

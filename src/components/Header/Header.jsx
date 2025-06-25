@@ -27,7 +27,9 @@ export default function Header({ numberOfItems }) {
     <header className={styles.header}>
       <div className={styles.headerContent}>
         <Link to="/" className={styles.logo} onClick={closeMenu}>
-          <span className={styles.logoText}>The Wardrobe</span>
+          <span className={styles.logoText}>
+            <em>the</em> EDIT
+          </span>
         </Link>
 
         {/* Desktop Navigation (Your original, working code) */}
