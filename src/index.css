@@ -7,8 +7,8 @@
   --primary-color: #ff6b35;
   --primary-hover: #ff5722;
   --secondary-color: #81716e;
-  --border-color: #e8e2db;
-  --subtle-text-color: #81716e;
+  --border-color: #d1c8be;
+  --subtle-text-color: #794b42;
   --accent-color: #f5f1ec;
   --success-color: #6b9080;
   --warning-color: #f4a261;
@@ -26,6 +26,10 @@
   --accent-color: #1e293b;
   --success-color: #10b981;
   --warning-color: #f4a261;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {

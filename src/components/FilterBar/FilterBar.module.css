@@ -61,7 +61,7 @@
 
 .categoryButton:hover {
   border-color: var(--primary-color);
-  color: var(--primary-color);
+  color: var(--accent-color);
 }
 
 .categoryButton.active {

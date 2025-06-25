@@ -158,14 +158,15 @@
 
 .mouseGlow {
   position: fixed;
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    color-mix(in srgb, var(--primary-color) 8%, transparent) 0%,
-    color-mix(in srgb, var(--primary-color) 4%, transparent) 40%,
-    transparent 70%
+    color-mix(in srgb, var(--primary-color) 18%, transparent) 0%,
+    color-mix(in srgb, var(--primary-color) 12%, transparent) 20%,
+    color-mix(in srgb, var(--primary-color) 6%, transparent) 40%,
+    transparent 60%
   );
   pointer-events: none;
   z-index: 1;

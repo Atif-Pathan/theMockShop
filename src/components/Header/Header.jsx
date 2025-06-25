@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styles from './Header.module.css';
 import { useTheme } from '../../contexts/ThemeContext';

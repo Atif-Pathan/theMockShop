@@ -1,5 +1,9 @@
-import { useState, useMemo } from 'react';
-import { useLoaderData, useOutletContext } from 'react-router-dom';
+import { useMemo } from 'react';
+import {
+  useLoaderData,
+  useOutletContext,
+  useSearchParams,
+} from 'react-router-dom';
 import ProductCard from '../../components/ProductCard/ProductCard.jsx';
 import FilterBar from '../../components/FilterBar/FilterBar.jsx';
 import styles from './ShopPage.module.css';
@@ -8,22 +12,49 @@ export default function ShopPage() {
   const allProducts = useLoaderData();
   const { cartItems, handleAddToCart } = useOutletContext();
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  // Use the useSearchParams hook instead of useState
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Read the current filter values from the URL search params
+  const searchTerm = searchParams.get('q') || '';
+  const selectedCategory = searchParams.get('category') || 'All';
 
   const categories = useMemo(() => {
     const setNames = new Set(allProducts.map((p) => p.category.name));
     return ['All', ...setNames];
   }, [allProducts]);
 
-  const filtered = allProducts.filter((product) => {
-    const matchCat =
+  // The filtering logic remains the same, but it's driven by the URL
+  const filteredProducts = allProducts.filter((product) => {
+    const matchesCategory =
       selectedCategory === 'All' || product.category.name === selectedCategory;
-    const matchSearch = product.title
+    const matchesSearch = product.title
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
-    return matchCat && matchSearch;
+    return matchesCategory && matchesSearch;
   });
+
+  // Handlers update the URL search params, which triggers a re-render
+  const handleSearchChange = (e) => {
+    const newSearchTerm = e.target.value;
+    const newParams = new URLSearchParams(searchParams);
+    if (newSearchTerm) {
+      newParams.set('q', newSearchTerm);
+    } else {
+      newParams.delete('q');
+    }
+    setSearchParams(newParams);
+  };
+
+  const handleCategoryChange = (category) => {
+    const newParams = new URLSearchParams(searchParams);
+    if (category === 'All') {
+      newParams.delete('category');
+    } else {
+      newParams.set('category', category);
+    }
+    setSearchParams(newParams);
+  };
 
   return (
     <div className={styles.page}>
@@ -37,24 +68,25 @@ export default function ShopPage() {
 
       <FilterBar
         searchTerm={searchTerm}
-        onSearchChange={(e) => setSearchTerm(e.target.value)}
+        onSearchChange={handleSearchChange}
         categories={categories}
         selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
+        onCategoryChange={handleCategoryChange}
       />
 
-      {filtered.length ? (
+      {filteredProducts.length > 0 ? (
         <div className={styles.productGrid}>
-          {filtered.map((prod) => {
-            const inCart = cartItems.find((item) => item.id === prod.id);
-            const initQty = inCart ? inCart.quantity : 1;
+          {filteredProducts.map((prod) => {
+            const itemInCart = cartItems.find((item) => item.id === prod.id);
+            const initialQuantity = itemInCart ? itemInCart.quantity : 1;
+
             return (
               <ProductCard
                 key={prod.id}
                 product={prod}
                 handleAddToCart={handleAddToCart}
-                initialQuantity={initQty}
-                isInCart={!!inCart}
+                initialQuantity={initialQuantity}
+                isInCart={!!itemInCart}
               />
             );
           })}
@@ -62,7 +94,7 @@ export default function ShopPage() {
       ) : (
         <div className={styles.noResults}>
           <h2>No products match</h2>
-          <p>Try changing your search or filters.</p>
+          <p>Try adjusting your search or filters.</p>
         </div>
       )}
     </div>
