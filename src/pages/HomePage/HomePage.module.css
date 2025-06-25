@@ -221,7 +221,7 @@
 @media (max-width: 768px) {
   .hero {
     padding: 1.5rem;
-    min-height: calc(100vh - 70px);
+    /* min-height: calc(100vh - 70px); */
   }
 
   .headline {
@@ -256,6 +256,14 @@
   .ctaButton {
     width: 100%;
     justify-content: center;
+    font-size: 0.85rem;
+  }
+  .subheadline {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .headlineAccent {
+    margin-top: 1rem;
   }
 }
 

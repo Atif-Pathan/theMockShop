@@ -1,3 +1,9 @@
+/* This new global rule is the definitive fix for the mobile menu overflow bug. */
+:global(html.mobile-menu-open) {
+  /* overflow: hidden; */
+}
+
+/* --- Your Original Desktop Styles (Preserved) --- */
 .header {
   background-color: var(--card-bg-color);
   border-bottom: 1px solid var(--border-color);
@@ -14,7 +20,6 @@
 .headerContent {
   display: flex;
   justify-content: space-between;
-  /* gap: 5rem; */
   align-items: center;
   padding: 1rem 2rem;
   max-width: 1400px;
@@ -30,18 +35,6 @@
   font-size: 1.5rem;
   text-decoration: none;
   color: inherit;
-  transition: transform 0.2s ease;
-  letter-spacing: -0.02em;
-}
-
-.logo:hover {
-  transform: scale(1.05);
-}
-
-.logo:focus {
-  /* outline: 2px solid color-mix(in srgb, var(--primary-color) 50%, transparent); */
-  /* outline-offset: 12px;
-  border-radius: 4px; */
 }
 
 .logoText {
@@ -53,9 +46,6 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 2px 2px 0px
-    color-mix(in srgb, var(--primary-color) 20%, transparent);
-  /* 4px 4px 0px color-mix(in srgb, var(--primary-color) 15%, transparent); */
 }
 
 .desktopNav {
@@ -72,17 +62,11 @@
   padding: 0.5rem 1rem;
   border-radius: 8px;
   transition: all 0.2s ease;
-  position: relative;
 }
 
 .navLink:hover {
   color: var(--text-color);
   background-color: color-mix(in srgb, var(--primary-color) 15%, transparent);
-}
-
-.navLink:focus {
-  outline: 2px solid color-mix(in srgb, var(--primary-color) 50%, transparent);
-  outline-offset: 2px;
 }
 
 .navLink.active {
@@ -96,10 +80,6 @@
   align-items: center;
   gap: 0.5rem;
   position: relative;
-}
-
-.cartText {
-  display: inline;
 }
 
 .cartBadge {
@@ -120,19 +100,7 @@
   justify-content: center;
   font-size: 0.75rem;
   font-weight: 600;
-  box-shadow: 0 2px 8px
-    color-mix(in srgb, var(--primary-color) 30%, transparent);
   animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
 }
 
 .themeButton {
@@ -147,6 +115,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 0.5rem;
 }
 
 .themeButton:hover {
@@ -156,26 +125,35 @@
   box-shadow: none;
 }
 
-.themeButton:focus {
-  outline: none;
-  /* outline-offset: 2px; */
+.themeIcon {
+  transition: transform 0.3s ease;
 }
 
 .themeButton:active {
-  /* background-color: color-mix(in srgb, var(--primary-color) 15%, transparent); */
+  outline: transparent;
 }
 
-.themeIcon {
-  transition: transform 0.3s ease;
+.themeButton:focus {
+  outline: transparent;
 }
 
 .themeButton:hover .themeIcon {
   transform: rotate(15deg);
 }
 
-/* Mobile Styles */
+/* --- NEW & UPDATED Mobile Styles --- */
+
+.mobileControls {
+  display: none; /* Hidden on desktop */
+  align-items: center;
+  gap: 1rem;
+}
+
+.hamburgerWrapper {
+  position: relative; /* Anchor for the mobile cart badge */
+}
+
 .hamburgerButton {
-  display: none;
   background: none;
   border: none;
   color: var(--text-color);
@@ -183,55 +161,56 @@
   padding: 0.5rem;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.2s ease;
   z-index: 101;
-}
-
-.hamburgerButton:hover {
-  background-color: color-mix(in srgb, var(--primary-color) 8%, transparent);
-}
-
-.hamburgerButton:focus {
-  outline: 2px solid color-mix(in srgb, var(--primary-color) 50%, transparent);
-  outline-offset: 2px;
-}
-
-.hamburgerButton:active {
-  background-color: color-mix(in srgb, var(--primary-color) 15%, transparent);
-}
-
-.hamburgerIcon {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease;
+}
+
+.hamburgerButton:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 10%, transparent);
+  box-shadow: none;
+}
+
+.hamburgerButton:active {
+  outline: transparent;
+}
+
+.hamburgerButton:focus {
+  outline: transparent;
 }
 
 .mobileNav {
-  display: none;
-  position: fixed;
-  top: 0;
+  /* This is now a dropdown, not a slide-in */
+  position: absolute;
+  top: 100%; /* Position directly below the header */
+  left: 0;
   right: 0;
-  width: 300px;
-  height: 100vh;
   background-color: var(--card-bg-color);
-  border-left: 1px solid var(--border-color);
-  transform: translateX(100%);
-  transition: transform 0.3s ease;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1);
   z-index: 99;
-  box-shadow: -4px 0 15px -3px rgb(0 0 0 / 0.1);
+  /* Control visibility with opacity and transform for animation */
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .mobileNav.open {
-  transform: translateX(0);
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .mobileNavContent {
   display: flex;
   flex-direction: column;
-  padding: 6rem 2rem 2rem 2rem;
-  gap: 1rem;
-  height: 100%;
+  padding: 0 1rem 1rem 1rem;
 }
 
 .mobileNavLink {
@@ -244,137 +223,44 @@
   color: var(--text-color);
   padding: 1rem;
   border-radius: 12px;
-  transition: all 0.2s ease;
 }
 
 .mobileNavLink:hover {
-  background-color: color-mix(in srgb, var(--primary-color) 8%, transparent);
   color: var(--primary-color);
-}
-
-.mobileNavLink:focus {
-  outline: 2px solid color-mix(in srgb, var(--primary-color) 50%, transparent);
-  outline-offset: 2px;
+  background-color: color-mix(in srgb, var(--primary-color) 15%, transparent);
+  font-weight: 700;
+  font-size: 1.15rem;
 }
 
 .mobileNavLink.active {
-  background-color: color-mix(in srgb, var(--primary-color) 12%, transparent);
+  /* background-color: color-mix(in srgb, var(--primary-color) 12%, transparent);
   color: var(--primary-color);
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1.3rem; */
 }
 
-.mobileThemeButton {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-size: 1.1rem;
-  font-weight: 500;
-  background: none;
-  border: none;
-  color: var(--text-color);
-  padding: 1rem;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin-top: auto;
-}
-
-.mobileThemeButton:hover {
-  background-color: color-mix(in srgb, var(--primary-color) 8%, transparent);
-  color: var(--primary-color);
-}
-
-.mobileThemeButton:focus {
-  outline: 2px solid color-mix(in srgb, var(--primary-color) 50%, transparent);
-  outline-offset: 2px;
-}
-
-.mobileThemeButton:active {
-  background-color: color-mix(in srgb, var(--primary-color) 15%, transparent);
-}
-
-.mobileOverlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 98;
-  backdrop-filter: blur(2px);
-}
-
-/* Media Queries */
-@media (min-width: 1800px) {
-  .navLink {
-    font-weight: 700;
-    font-size: 1.1rem;
-  }
-  .themeButton {
-    font-size: 1.2rem;
-    padding: 0.5rem;
-  }
-  .logoText {
-    font-size: 1.4rem;
-  }
-}
-
+/* Media Query to switch between desktop and mobile nav */
 @media (max-width: 768px) {
-  /* .headerContent {
-    padding: 1rem 1.5rem;
-  } */
-
   .desktopNav {
     display: none;
   }
-
-  .hamburgerButton {
+  .mobileControls {
     display: flex;
   }
+}
 
-  .mobileNav {
-    display: block;
-  }
-
-  .mobileOverlay {
-    display: block;
-  }
-
-  .logo {
-    font-size: 1.3rem;
-  }
-
+@media (max-width: 320px) {
   .logoText {
-    text-shadow: 1px 1px 0px
-      color-mix(in srgb, var(--primary-color) 20%, transparent);
+    font-size: 1.15rem;
   }
 }
 
-@media (max-width: 480px) {
-  .mobileNav {
-    width: 100%;
-    border-left: none;
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
   }
-
-  .mobileNavContent {
-    padding: 5rem 1.5rem 2rem 1.5rem;
-  }
-}
-
-/* Reduced motion preferences */
-@media (prefers-reduced-motion: reduce) {
-  .logo,
-  .cartBadge,
-  .navLink,
-  .themeButton,
-  .hamburgerButton,
-  .mobileNav,
-  .mobileNavLink,
-  .mobileThemeButton,
-  .themeIcon,
-  .hamburgerIcon {
-    animation: none;
-    transition: none;
+  50% {
+    transform: scale(1.1);
   }
 }

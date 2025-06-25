@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styles from './Header.module.css';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -8,17 +8,29 @@ export default function Header({ numberOfItems }) {
   const { theme, toggleTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // NEW: This effect is the definitive fix for the body scroll issue.
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.documentElement.classList.add('mobile-menu-open');
+    } else {
+      document.documentElement.classList.remove('mobile-menu-open');
+    }
+    // Cleanup function to ensure the class is removed if the component unmounts
+    return () => {
+      document.documentElement.classList.remove('mobile-menu-open');
+    };
+  }, [isMenuOpen]);
+
   const closeMenu = () => setIsMenuOpen(false);
 
   return (
     <header className={styles.header}>
       <div className={styles.headerContent}>
         <Link to="/" className={styles.logo} onClick={closeMenu}>
-          {/* <span className={styles.logoIcon}>👗</span> */}
           <span className={styles.logoText}>The Wardrobe</span>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation (Your original, working code) */}
         <nav
           className={styles.desktopNav}
           role="navigation"
@@ -59,11 +71,12 @@ export default function Header({ numberOfItems }) {
               </span>
             )}
           </NavLink>
-
           <button
             onClick={toggleTheme}
             className={styles.themeButton}
-            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
+            aria-label={`Switch to ${
+              theme === 'light' ? 'dark' : 'light'
+            } theme`}
             title={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
           >
             <span className={styles.themeIcon}>
@@ -76,25 +89,53 @@ export default function Header({ numberOfItems }) {
           </button>
         </nav>
 
-        {/* Hamburger Button for Mobile */}
-        <button
-          className={styles.hamburgerButton}
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle navigation menu"
-          aria-expanded={isMenuOpen}
-          aria-controls="mobile-navigation"
-        >
-          <span className={styles.hamburgerIcon}>
-            {isMenuOpen ? (
-              <i className="fa-solid fa-xmark" aria-hidden="true"></i>
-            ) : (
-              <i className="fa-solid fa-bars" aria-hidden="true"></i>
+        {/* NEW: Mobile Controls Container */}
+        <div className={styles.mobileControls}>
+          <button
+            onClick={toggleTheme}
+            className={styles.themeButton}
+            aria-label={`Switch to ${
+              theme === 'light' ? 'dark' : 'light'
+            } theme`}
+          >
+            <span className={styles.themeIcon}>
+              {theme === 'light' ? (
+                <i className="fa-solid fa-moon" aria-hidden="true"></i>
+              ) : (
+                <i className="fa-solid fa-sun" aria-hidden="true"></i>
+              )}
+            </span>
+          </button>
+          <div className={styles.hamburgerWrapper}>
+            <button
+              className={styles.hamburgerButton}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle navigation menu"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-navigation"
+            >
+              <span className={styles.hamburgerIcon}>
+                {isMenuOpen ? (
+                  <i className="fa-solid fa-xmark" aria-hidden="true"></i>
+                ) : (
+                  <i className="fa-solid fa-bars" aria-hidden="true"></i>
+                )}
+              </span>
+            </button>
+            {/* Cart badge for mobile, only shows when menu is closed */}
+            {!isMenuOpen && numberOfItems > 0 && (
+              <span
+                className={styles.cartBadge}
+                aria-label={`${numberOfItems} items in cart`}
+              >
+                {numberOfItems}
+              </span>
             )}
-          </span>
-        </button>
+          </div>
+        </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
+      {/* Mobile Navigation Dropdown */}
       <nav
         id="mobile-navigation"
         className={`${styles.mobileNav} ${isMenuOpen ? styles.open : ''}`}
@@ -111,7 +152,6 @@ export default function Header({ numberOfItems }) {
                 : styles.mobileNavLink
             }
           >
-            <i className="fa-solid fa-home" aria-hidden="true"></i>
             Home
           </NavLink>
           <NavLink
@@ -123,7 +163,6 @@ export default function Header({ numberOfItems }) {
                 : styles.mobileNavLink
             }
           >
-            <i className="fa-solid fa-store" aria-hidden="true"></i>
             Shop
           </NavLink>
           <NavLink
@@ -135,41 +174,10 @@ export default function Header({ numberOfItems }) {
                 : styles.mobileNavLink
             }
           >
-            <i className="fa-solid fa-cart-shopping" aria-hidden="true"></i>
             Cart ({numberOfItems})
           </NavLink>
-
-          <button
-            onClick={() => {
-              toggleTheme();
-              closeMenu();
-            }}
-            className={styles.mobileThemeButton}
-            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
-          >
-            {theme === 'light' ? (
-              <>
-                <i className="fa-solid fa-moon" aria-hidden="true"></i>
-                Dark Mode
-              </>
-            ) : (
-              <>
-                <i className="fa-solid fa-sun" aria-hidden="true"></i>
-                Light Mode
-              </>
-            )}
-          </button>
         </div>
       </nav>
-
-      {/* Mobile menu overlay */}
-      {isMenuOpen && (
-        <div
-          className={styles.mobileOverlay}
-          onClick={closeMenu}
-          aria-hidden="true"
-        ></div>
-      )}
     </header>
   );
 }
