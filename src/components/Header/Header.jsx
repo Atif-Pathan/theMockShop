@@ -8,7 +8,6 @@ export default function Header({ numberOfItems }) {
   const { theme, toggleTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // NEW: This effect is the definitive fix for the body scroll issue.
   useEffect(() => {
     if (isMenuOpen) {
       document.documentElement.classList.add('mobile-menu-open');
