@@ -2,6 +2,8 @@ import { expect, afterEach, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
 import * as matchers from '@testing-library/jest-dom/matchers';
 
+window.scrollTo = vi.fn();
+
 // Extends Vitest's expect method with matchers from jest-dom
 expect.extend(matchers);
 
@@ -39,4 +41,5 @@ vi.mock('canvas-confetti', () => ({
 afterEach(() => {
   cleanup();
   vi.clearAllMocks();
+  window.localStorage.clear();
 });
