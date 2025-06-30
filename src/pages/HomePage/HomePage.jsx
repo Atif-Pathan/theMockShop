@@ -31,7 +31,11 @@ export default function HomePage() {
 
   return (
     <main className={styles.hero}>
-      <div className={styles.mouseGlow} ref={mouseGlowRef}></div>
+      <div
+        data-testid="mouse-glow"
+        className={styles.mouseGlow}
+        ref={mouseGlowRef}
+      ></div>
 
       <div className={styles.heroContent}>
         <h1 className={styles.headline}>
