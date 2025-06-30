@@ -8,6 +8,8 @@ export default function FilterBar({
   selectedCategory,
   onCategoryChange,
 }) {
+  // console.log(selectedCategory);
+
   return (
     <div className={styles.filterBar}>
       <div className={styles.searchWrapper}>
@@ -28,7 +30,7 @@ export default function FilterBar({
         />
       </div>
 
-      <div className={styles.categoryFilters}>
+      <div className={styles.categoryFilters} data-testid="category-filters">
         {categories.map((category) => (
           <button
             key={category}
