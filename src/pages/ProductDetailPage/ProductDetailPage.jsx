@@ -55,7 +55,10 @@ export default function ProductDetailPage() {
         <i className="fa-solid fa-arrow-left" aria-hidden="true"></i>
         Back to Shop
       </Link>
-      <section className={styles.productSection}>
+      <section
+        className={styles.productSection}
+        data-testid="main-product-section"
+      >
         {/* --- IMAGE GALLERY COLUMN --- */}
         <div className={styles.imageSection}>
           <img
