@@ -1,12 +1,29 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet, ScrollRestoration } from 'react-router-dom';
 import Header from './components/Header/Header.jsx';
 import styles from './App.module.css';
 import { Analytics } from '@vercel/analytics/react';
 
 function App() {
-  const [cartItems, setCartItems] = useState([]);
+  // Read from localStorage only on the first render.
+  // This function runs only once when the component first mounts.
+  const [cartItems, setCartItems] = useState(() => {
+    try {
+      const localData = localStorage.getItem('cartItems');
+      // If localData exists, parse it. Otherwise, return an empty array.
+      return localData ? JSON.parse(localData) : [];
+    } catch (error) {
+      console.error('Could not parse cart items from localStorage', error);
+      return [];
+    }
+  });
+
+  // Write to localStorage whenever cartItems changes.
+  // This effect runs every time the `cartItems` state is updated.
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const handleAddToCart = (product, quantity) => {
     if (quantity <= 0) {
