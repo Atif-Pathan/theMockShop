@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Outlet, ScrollRestoration } from 'react-router-dom';
 import Header from './components/Header/Header.jsx';
 import styles from './App.module.css';
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -43,20 +44,23 @@ function App() {
   };
 
   return (
-    <div className={styles.app}>
-      <Header numberOfItems={cartItems.length} />
-      <main className={styles.mainContent}>
-        <Outlet
-          context={{
-            cartItems,
-            handleAddToCart,
-            handleUpdateQuantity,
-            handleRemoveItem,
-          }}
-        />
-      </main>
-      <ScrollRestoration />
-    </div>
+    <>
+      <div className={styles.app}>
+        <Header numberOfItems={cartItems.length} />
+        <main className={styles.mainContent}>
+          <Outlet
+            context={{
+              cartItems,
+              handleAddToCart,
+              handleUpdateQuantity,
+              handleRemoveItem,
+            }}
+          />
+        </main>
+        <ScrollRestoration />
+      </div>
+      <Analytics />
+    </>
   );
 }
 
