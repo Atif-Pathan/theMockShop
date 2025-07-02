@@ -17,6 +17,13 @@ export function ThemeProvider({ children }) {
   useEffect(() => {
     document.documentElement.className = theme;
     localStorage.setItem('theme', theme);
+    const faviconLink = document.getElementById('theme-favicon');
+    if (faviconLink) {
+      faviconLink.href =
+        theme === 'dark'
+          ? '/src/assets/dark-favicon.png' // Path to your dark theme favicon
+          : '/src/assets/light-favicon.png'; // Path to your light theme favicon
+    }
   }, [theme]);
 
   // 4. Function to toggle the theme
