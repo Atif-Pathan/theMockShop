@@ -21,8 +21,8 @@ export function ThemeProvider({ children }) {
     if (faviconLink) {
       faviconLink.href =
         theme === 'dark'
-          ? '/src/assets/dark-favicon.png' // Path to your dark theme favicon
-          : '/src/assets/light-favicon.png'; // Path to your light theme favicon
+          ? './src/assets/dark-favicon.png' // Path to your dark theme favicon
+          : './src/assets/light-favicon.png'; // Path to your light theme favicon
     }
   }, [theme]);
 
